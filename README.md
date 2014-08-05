@@ -1,6 +1,8 @@
 # Transit
 
-TODO: Write a gem description
+This Gem is still in development.
+
+It is currently a personal project and will likely not be good for general-use. This may change in the future.
 
 ## Installation
 
