@@ -1,8 +1,10 @@
+require 'thor'
+
 class Transit < Thor
 
-  desc 'route', 'Get a bus route between two locations''
-  option :to, aliases: '-t', desc: 'Specify the destination location''
-  option :from, aliases: '-f', desc: 'Specify the departure location''
+  desc 'route', 'Get a bus route between two locations'
+  option :to, aliases: '-t', desc: 'Specify the destination location'
+  option :from, aliases: '-f', desc: 'Specify the departure location'
   def route
     to = options[:to]
     from = options[:from]
