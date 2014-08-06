@@ -21,6 +21,11 @@ module Transit
       @legs
     end
 
+    def print
+      puts "Departing from: #{start_location}"
+      puts "Arriving at: #{start_location}"
+    end
+
     private
 
     def parse_legs params

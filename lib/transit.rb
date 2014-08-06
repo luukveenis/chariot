@@ -23,6 +23,11 @@ module Transit
     data['routes'].each do |route|
       routes << Route.new(route)
     end
+    routes.each_with_index do |route, index|
+      puts "ROUTE: #{index + 1}"
+      route.print
+      puts ''
+    end
   end
 
   private
