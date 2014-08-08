@@ -12,22 +12,16 @@ module Transit
     time ||= Time.now.to_i
     to = config['transit'][to] if config['transit'][to]
     from = config['transit'][from] if config['transit'][from]
-    params = { origin: from, destination: to, departure_time: time }
+    params = { origin: from, destination: to, departure_time: time, mode: 'transit' }
 
     uri = URI google_uri
     uri.query = URI.encode_www_form(params)
     resp = Net::HTTP.get_response(uri)
     data = JSON.parse(resp.body)
 
-    routes = []
-    data['routes'].each do |route|
-      routes << Route.new(route)
-    end
-    routes.each_with_index do |route, index|
-      puts "ROUTE: #{index + 1}"
-      route.print
-      puts ''
-    end
+    routes = data['routes'].map { |route| Route.new(route) }
+
+    binding.pry
   end
 
   private

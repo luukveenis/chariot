@@ -22,8 +22,10 @@ module Transit
     end
 
     def print
-      puts "Departing from: #{start_location}"
-      puts "Arriving at: #{start_location}"
+      puts "Departing from: #{@start_location}"
+      puts "Arriving at: #{@end_location}"
+      puts "======= LEGS ======"
+      @legs.each { |leg| leg.get_directions }
     end
 
     private
