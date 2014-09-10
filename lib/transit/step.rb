@@ -4,6 +4,7 @@ module Transit
     def initialize params
       @instructions = params['html_instructions'].encode('ASCII', encode_options)
       @mode = params['travel_mode']
+      @transit_details = params['transit_details'] if @mode == 'TRANSIT'
       @sub_steps = parse_sub_steps params['steps']
     end
 
@@ -19,19 +20,20 @@ module Transit
       @sub_steps
     end
 
-    def get_directions params
-      if @mode == 'walking'
-        directions = []
-        directions << @instructions
-        directions
-      elsif @mode == 'transit'
-        directions = []
-        directions << "Bus number: #{params['transit_details']['line']['short_name']}"
-        directions << "Depart from: #{params['transit_details']['departure_stop']['name']}"
-        directions << "Arrive at: #{params['transit_details']['arrival_stop']['name']}"
-        directions.join('\n')
+    def transit?
+      @mode == 'TRANSIT'
+    end
+
+    def display
+      if @mode == 'WALKING'
+        puts "Not yet implemented"
+      elsif @mode == 'TRANSIT'
+        puts "Depart: #{@transit_details['departure_time']['text']}"
+        puts "Arrive: #{@transit_details['arrival_time']['text']}"
+        puts "Route:  #{@transit_details['line']['short_name']}"
+        puts "Stop:   #{@transit_details['departure_stop']['name']}"
       else
-        raise ArgumentError 'I have no idea how to deal with that transit mode'
+        raise 'I have no idea how to deal with that'
       end
     end
 

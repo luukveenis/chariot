@@ -5,23 +5,24 @@ require 'pry'
 require 'uri'
 require 'json'
 require 'net/http'
+require 'colorize'
 
 module Transit
 
-  def self.get_routes from, to, time=nil
-    time ||= Time.now.to_i
+  def self.get_routes from, to, time=nil, alts
+    time = time ? get_utc_time(time) : Time.now.to_i
     to = config['transit'][to] if config['transit'][to]
     from = config['transit'][from] if config['transit'][from]
-    params = { origin: from, destination: to, departure_time: time, mode: 'transit' }
+    params = { origin: from, destination: to, departure_time: time, mode: 'transit', alternatives: alts }
 
-    uri = URI google_uri
-    uri.query = URI.encode_www_form(params)
-    resp = Net::HTTP.get_response(uri)
-    data = JSON.parse(resp.body)
 
+    data = get_google_response(params)
     routes = data['routes'].map { |route| Route.new(route) }
-
-    binding.pry
+    routes.each_with_index do |route, i|
+      puts "========== Route: #{i + 1}".colorize(:blue)
+      route.display_bus_only
+      puts ""
+    end
   end
 
   private
@@ -36,5 +37,17 @@ module Transit
 
   def self.config
     @config ||= YAML.load_file(File.join(gem_root, 'config/config.yml'))
+  end
+
+  def self.get_utc_time time
+    now = Time.now
+    Time.new(now.year, now.month, now.day, time).to_i
+  end
+
+  def self.get_google_response params
+    uri = URI google_uri
+    uri.query = URI.encode_www_form(params)
+    resp = Net::HTTP.get_response(uri)
+    JSON.parse(resp.body)
   end
 end

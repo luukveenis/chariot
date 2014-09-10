@@ -9,10 +9,13 @@ class TransitApp < Thor
   option :origin, aliases: '-o', desc: 'Specify the destination location'
   option :destination, aliases: '-d', desc: 'Specify the departure location'
   option :time, aliases: '-t', desc: 'Specify departure time'
+  option :alternatives, aliases: '-a', type: :boolean, desc: 'Allow alternate routes. Without this only the best match is returned'
   def route
     from = options[:origin]
     to = options[:destination]
-    Transit.get_routes(from, to)
+    time = options[:time]
+    alts = options[:alternatives] || false
+    Transit.get_routes(from, to, time, alts)
   end
 end
 

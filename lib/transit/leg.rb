@@ -21,6 +21,12 @@ module Transit
       @steps
     end
 
+    def display
+      # puts "==== STEPS ===="
+      @steps.each { |step| step.display if step.transit? }
+      # puts "==============="
+    end
+
     private
 
     def parse_steps steps

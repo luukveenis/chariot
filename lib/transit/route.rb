@@ -21,11 +21,12 @@ module Transit
       @legs
     end
 
-    def print
+    def display_bus_only
+      # puts "==========================================================================================="
       puts "Departing from: #{@start_location}"
       puts "Arriving at: #{@end_location}"
-      puts "======= LEGS ======"
-      @legs.each { |leg| leg.get_directions }
+      @legs.each { |leg| leg.display }
+      # puts "==========================================================================================="
     end
 
     private
