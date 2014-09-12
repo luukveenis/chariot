@@ -2,7 +2,7 @@ module Transit
   class Step
 
     def initialize params
-      @instructions = params['html_instructions'].encode('ASCII', encode_options)
+      @instructions = params['html_instructions'].encode('ASCII', encode_options) if params[:html_instructions]
       @mode = params['travel_mode']
       @transit_details = params['transit_details'] if @mode == 'TRANSIT'
       @sub_steps = parse_sub_steps params['steps']
@@ -28,10 +28,12 @@ module Transit
       if @mode == 'WALKING'
         puts "Not yet implemented"
       elsif @mode == 'TRANSIT'
+        puts ""
         puts "Depart: #{@transit_details['departure_time']['text']}"
         puts "Arrive: #{@transit_details['arrival_time']['text']}"
         puts "Route:  #{@transit_details['line']['short_name']}"
-        puts "Stop:   #{@transit_details['departure_stop']['name']}"
+        puts "Departure Stop:   #{@transit_details['departure_stop']['name']}"
+        puts "Arrival Stop:     #{@transit_details['arrival_stop']['name']}"
       else
         raise 'I have no idea how to deal with that'
       end
