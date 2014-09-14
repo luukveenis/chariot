@@ -11,8 +11,8 @@ module Transit
 
   def self.get_routes from, to, time=nil, alts
     time = time ? get_utc_time(time) : Time.now.to_i
-    to = config['transit'][to] if config['transit'][to]
-    from = config['transit'][from] if config['transit'][from]
+    to = config['transit'][to] || to
+    from = config['transit'][from] || from
     params = { origin: from, destination: to, departure_time: time, mode: 'transit', alternatives: alts }
 
 
