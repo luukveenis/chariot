@@ -31,7 +31,7 @@ module Transit
         puts ""
         puts "Depart: #{@transit_details['departure_time']['text']}"
         puts "Arrive: #{@transit_details['arrival_time']['text']}"
-        puts "Route:  #{@transit_details['line']['short_name']}"
+        puts "Route:  #{@transit_details['line']['short_name']} - #{@transit_details['line']['name']}"
         puts "Departure Stop:   #{@transit_details['departure_stop']['name']}"
         puts "Arrival Stop:     #{@transit_details['arrival_stop']['name']}"
       else
