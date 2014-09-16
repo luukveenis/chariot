@@ -30,6 +30,11 @@ class TransitApp < Thor
       puts "#{name}: #{value}"
     end
   end
+
+  desc 'delete_alias NAME', 'Deletes the alias with the given name'
+  def delete_alias(name)
+    Transit.delete_location(name)
+  end
 end
 
 TransitApp.start

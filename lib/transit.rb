@@ -33,6 +33,14 @@ module Transit
     end
   end
 
+  def self.delete_location name
+    file = config
+    file['aliases'].delete name
+    File.open(config_path, "w") do |out|
+      YAML.dump(file, out)
+    end
+  end
+
   def self.locations
     config['aliases']
   end
