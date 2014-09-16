@@ -17,6 +17,11 @@ class TransitApp < Thor
     alts = options[:alternatives] || false
     Transit.get_routes(from, to, time, alts)
   end
+
+  desc 'alias NAME LOCATION', 'Save an alias for a location'
+  def alias(name, location)
+    Transit.add_location(name, location)
+  end
 end
 
 TransitApp.start

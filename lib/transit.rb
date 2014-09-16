@@ -25,6 +25,14 @@ module Transit
     end
   end
 
+  def self.add_location name, location
+    file = config
+    file['transit'][name] = location
+    File.open(config_path, "w") do |out|
+      YAML.dump(file, out)
+    end
+  end
+
   private
 
   def self.gem_root
@@ -36,7 +44,11 @@ module Transit
   end
 
   def self.config
-    @config ||= YAML.load_file(File.join(gem_root, 'config/config.yml'))
+    YAML.load_file(config_path)
+  end
+
+  def self.config_path
+    File.join(gem_root, 'config/config.yml')
   end
 
   def self.get_utc_time time
