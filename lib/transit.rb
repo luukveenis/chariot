@@ -27,10 +27,14 @@ module Transit
 
   def self.add_location name, location
     file = config
-    file['transit'][name] = location
+    file['aliases'][name] = location
     File.open(config_path, "w") do |out|
       YAML.dump(file, out)
     end
+  end
+
+  def self.locations
+    config['aliases']
   end
 
   private

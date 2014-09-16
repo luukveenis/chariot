@@ -22,6 +22,14 @@ class TransitApp < Thor
   def alias(name, location)
     Transit.add_location(name, location)
   end
+
+  desc 'aliases', 'Show all saved aliases'
+  def aliases
+    aliases = Transit.locations
+    aliases.each do |name, value|
+      puts "#{name}: #{value}"
+    end
+  end
 end
 
 TransitApp.start
