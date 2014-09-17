@@ -34,7 +34,7 @@ module Transit
         puts "Not yet implemented"
       elsif transit?
         puts ""
-        puts "Depart: #{@transit_details['departure_time']['text']}"
+        puts "Depart: #{departure_time}"
         puts "Arrive: #{@transit_details['arrival_time']['text']}"
         puts "Route:  #{@transit_details['line']['short_name']} - #{@transit_details['line']['name']}"
         puts "Departure Stop:   #{@transit_details['departure_stop']['name']}"
@@ -63,6 +63,16 @@ module Transit
         undef: :replace,
         replace: ''
       }
+    end
+
+    # Colorize the time in red if the bus leaves in 10 or less minutes
+    def departure_time
+      text = @transit_details['departure_time']['text']
+      if @transit_details['departure_time']['value'].to_i - Time.now.to_i <= 600
+        text.colorize(:red)
+      else
+        text
+      end
     end
   end
 end
