@@ -15,14 +15,7 @@ module Transit
     from = config['aliases'][from] || from
     params = { origin: from, destination: to, departure_time: time, mode: 'transit', alternatives: alts }
 
-
-    data = get_google_response(params)
-    routes = data['routes'].map { |route| Route.new(route) }
-    routes.each_with_index do |route, i|
-      puts "========== Route: #{i + 1}".colorize(:blue)
-      route.display_bus_only
-      puts ""
-    end
+    display(get_google_response(params))
   end
 
   def self.add_location name, location
@@ -73,5 +66,14 @@ module Transit
     uri.query = URI.encode_www_form(params)
     resp = Net::HTTP.get_response(uri)
     JSON.parse(resp.body)
+  end
+
+  def self.display data
+    routes = data['routes'].map { |route| Route.new(route) }
+    routes.each_with_index do |route, i|
+      puts "========== Route: #{i + 1}".colorize(:blue)
+      route.display_bus_only
+      puts ""
+    end
   end
 end
