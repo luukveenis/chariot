@@ -3,6 +3,33 @@
 require 'thor'
 require 'transit'
 
+class Aliases < Thor
+  namespace 'alias'
+
+  desc 'add NAME LOCATION', 'Save an alias for a location'
+  def add(name, location)
+    Transit.add_location(name, location)
+  end
+
+  desc 'list', 'Show all saved aliases'
+  def list
+    aliases = Transit.locations
+    aliases.each do |name, value|
+      puts "#{name}: #{value}"
+    end
+  end
+
+  desc 'delete NAME', 'Deletes the alias with the given name'
+  option :all, aliases: '-a', type: :boolean, desc: 'Delete all aliases - WARNING PERMANENT'
+  def delete(name)
+    if options[:a] == true
+      Transit.delete_locations
+    else
+      Transit.clear_location(name)
+    end
+  end
+end
+
 class TransitApp < Thor
 
   desc 'route', 'Get a bus route between two locations'
@@ -18,23 +45,7 @@ class TransitApp < Thor
     Transit.get_routes(from, to, time, alts)
   end
 
-  desc 'alias NAME LOCATION', 'Save an alias for a location'
-  def alias(name, location)
-    Transit.add_location(name, location)
-  end
-
-  desc 'aliases', 'Show all saved aliases'
-  def aliases
-    aliases = Transit.locations
-    aliases.each do |name, value|
-      puts "#{name}: #{value}"
-    end
-  end
-
-  desc 'delete_alias NAME', 'Deletes the alias with the given name'
-  def delete_alias(name)
-    Transit.delete_location(name)
-  end
+  register(Aliases, 'alias', 'alias <command>', "Manage the application's aliases")
 end
 
 TransitApp.start
