@@ -4,7 +4,7 @@ module Transit
     def initialize params
       @instructions = params['html_instructions'].encode('ASCII', encode_options) if params[:html_instructions]
       @mode = params['travel_mode']
-      @transit_details = params['transit_details'] if @mode == 'TRANSIT'
+      @transit_details = params['transit_details'] if transit?
       @sub_steps = parse_sub_steps params['steps']
     end
 
