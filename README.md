@@ -1,26 +1,24 @@
-# Transit
+# Chariot
 
-This Gem is still in development.
+Chariot provides an implementation of the Google Directions API, specifically allowing users to request transit routes.
 
-It is currently a personal project and will likely not be good for general-use. This may change in the future.
+It is currently a personal project and only provides access to bus routes.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'transit'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install the gem yourself using:
 
     $ gem install transit
 
 ## Usage
 
-TODO: Write usage instructions here
+For detailed instructions on using the command line interface type:
+
+    $ transit help
+
+or:
+
+    $ transit help <command>
 
 ## Contributing
 
