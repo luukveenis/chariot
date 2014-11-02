@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'transit/version'
+require 'chariot/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "transit"
-  spec.version       = Transit::VERSION
+  spec.name          = "chariot"
+  spec.version       = Chariot::VERSION
   spec.authors       = ["Luuk Veenis"]
   spec.email         = ["luukveenis@shaw.ca"]
   spec.summary       = %q{BC Transit API app}

@@ -1,19 +1,19 @@
 #!/usr/bin/env ruby
 
 require 'thor'
-require 'transit'
+require 'chariot'
 
 class Aliases < Thor
   namespace 'alias'
 
   desc 'add NAME LOCATION', 'Save an alias for a location'
   def add(name, location)
-    Transit.add_location(name, location)
+    Chariot.add_location(name, location)
   end
 
   desc 'list', 'Show all saved aliases'
   def list
-    aliases = Transit.locations
+    aliases = Chariot.locations
     aliases.each do |name, value|
       puts "#{name}: #{value}"
     end
@@ -23,14 +23,15 @@ class Aliases < Thor
   option :all, aliases: '-a', type: :boolean, desc: 'Delete all aliases - WARNING PERMANENT'
   def delete(name)
     if options[:a] == true
-      Transit.delete_locations
+      Chariot.delete_locations
     else
-      Transit.clear_location(name)
+      Chariot.clear_location(name)
     end
   end
 end
 
 class TransitApp < Thor
+  namespace 'chariot'
 
   desc 'route', 'Get a bus route between two locations'
   option :origin, aliases: '-o', desc: 'Specify the destination location'
@@ -42,7 +43,7 @@ class TransitApp < Thor
     to = options[:destination]
     time = options[:time]
     alts = options[:alternatives] || false
-    Transit.get_routes(from, to, time, alts)
+    Chariot.get_routes(from, to, time, alts)
   end
 
   register(Aliases, 'alias', 'alias <command>', "Manage the application's aliases")

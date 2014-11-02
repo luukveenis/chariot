@@ -1,6 +1,6 @@
-require 'transit/step'
+require 'chariot/step'
 
-module Transit
+module Chariot
   class Leg
 
     def initialize params

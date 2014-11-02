@@ -1,5 +1,5 @@
-require "transit/version"
-require "transit/route"
+require "chariot/version"
+require "chariot/route"
 require 'yaml'
 require 'pry'
 require 'uri'
@@ -7,7 +7,7 @@ require 'json'
 require 'net/http'
 require 'colorize'
 
-module Transit
+module Chariot
 
   def self.get_routes from, to, time=nil, alts
     time = time ? get_utc_time(time) : Time.now.to_i

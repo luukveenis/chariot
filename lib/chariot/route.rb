@@ -1,6 +1,6 @@
-require 'transit/leg'
+require 'chariot/leg'
 
-module Transit
+module Chariot
   class Route
 
     def initialize params

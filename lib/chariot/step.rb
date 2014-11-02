@@ -1,4 +1,4 @@
-module Transit
+module Chariot
   class Step
 
     def initialize params
